@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     let allProducts = []; 
     let currentPage = 1;
+    const productListContainer = document.getElementById("productList");
+
 
     fetch("https://dummyjson.com/products")
     .then((response) => {
