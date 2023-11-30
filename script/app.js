@@ -1,7 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let allProducts = [];
-  let currentPage = 1;
+  let allProducts = []; 
+  const paginationContainer = document.getElementById("pagination");
+  const searchInput = document.getElementById("searchInput");
+  const categoryFilter = document.getElementById("categoryFilter");
   const productsPerPage = 10;
+  let currentPage = 1;
 
   const productListContainer = document.getElementById("productList");
 
