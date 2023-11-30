@@ -20,6 +20,20 @@ document.addEventListener("DOMContentLoaded", function () {
       console.error("There was a problem with the fetch operation:", error);
     });
 
+  window.filterByCategory = function () {
+      const selectedCategory = categoryFilter.value;
+      const keyword = searchInput.value.toLowerCase();
+    
+      if (selectedCategory === "all") {
+        const filteredProducts = allProducts.filter(
+          (product) =>
+            product.title.toLowerCase().includes(keyword) ||
+            product.description.toLowerCase().includes(keyword) ||
+            product.category.toLowerCase().includes(keyword)
+        );
+      }
+    };
+
   function displayProductList(products, page) {
     const startIdx = (page - 1) * productsPerPage;
     const endIdx = startIdx + productsPerPage;
@@ -32,15 +46,6 @@ document.addEventListener("DOMContentLoaded", function () {
       productCard.classList.add("product-card");
 
       productCard.addEventListener("click", () => openProductPage(product));
-
-      productCard.innerHTML = `
-                      <img src="${product.thumbnail}" alt="${product.title}" />
-                      <h3>${product.title}</h3>
-                      <p>Price: $${product.price}</p>
-                      <p>Discount: ${product.discountPercentage}%</p>
-                      <p>Category: ${product.category}</p>
-                      <p>Stock: ${product.stock}</p>
-                  `;
 
       productListContainer.appendChild(productCard);
     });

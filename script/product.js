@@ -4,14 +4,16 @@ document.addEventListener("DOMContentLoaded", function () {
         id: urlParams.get('id'),
         title: decodeURIComponent(urlParams.get('title')),
         price: urlParams.get('price'),
-        discount: urlParams.get('discount'),
-        category: decodeURIComponent(urlParams.get('category')),
-        stock: urlParams.get('stock'),
-        thumbnail: decodeURIComponent(urlParams.get('thumbnail')),
     };
+
     function displayProductDetails(product) {
         const productDetailsContainer = document.getElementById('productDetails');
-    }
-        displayProductDetails(productDetails);
 
+        productDetailsContainer.innerHTML = `
+            <img src="${product.thumbnail}" alt="${product.title}" />
+            <h2>${product.title}</h2>
+            <p>Price: $${product.price}</p>
+        `;
+    }
+    displayProductDetails(productDetails);
 });
