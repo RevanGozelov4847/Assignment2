@@ -76,4 +76,12 @@ function displayPagination(products) {
 window.sortProducts = function () {
   const selectedCriteria = sortCriteria.value;
   let sortedProducts = [...allProducts];
-}
+
+  if (selectedCriteria === "price") {
+    sortedProducts.sort((a, b) => a.price - b.price);
+  }
+
+  currentPage = 1;
+  displayProductList(sortedProducts, currentPage);
+  displayPagination(sortedProducts);
+};
