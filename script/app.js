@@ -58,3 +58,13 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = productPageURL;
   }
 });
+
+function displayPagination(products) {
+  const totalPages = Math.ceil(products.length / productsPerPage);
+
+  paginationContainer.innerHTML = "";
+
+  for (let i = 1; i <= totalPages; i++) {
+    const pageButton = document.createElement("button");
+  }
+}
