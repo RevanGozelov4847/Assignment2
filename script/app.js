@@ -73,3 +73,7 @@ function displayPagination(products) {
     const pageButton = document.createElement("button");
   }
 }
+window.sortProducts = function () {
+  const selectedCriteria = sortCriteria.value;
+  let sortedProducts = [...allProducts];
+}
