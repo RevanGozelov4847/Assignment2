@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Get information about the product from the web address
     const urlParams = new URLSearchParams(window.location.search);
     const productDetails = {
         id: urlParams.get('id'),
@@ -10,8 +11,11 @@ document.addEventListener("DOMContentLoaded", function () {
         thumbnail: decodeURIComponent(urlParams.get('thumbnail')),
     };
 
+    // Show the product details on the page
     function displayProductDetails(product) {
-        document.getElementById('productDetails').innerHTML = `<img src="${product.thumbnail}" alt="${product.title}" />
+        const productDetailsContainer = document.getElementById('productDetails');
+        productDetailsContainer.innerHTML = `
+            <img src="${product.thumbnail}" alt="${product.title}" />
             <h2>${product.title}</h2>
             <p>Price: $${product.price}</p>
             <p>Discount: ${product.discount}%</p>
@@ -19,5 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
             <p>Stock: ${product.stock}</p>`;
     }
 
+    // Display the details of the product when the page is loaded
     displayProductDetails(productDetails);
 });
