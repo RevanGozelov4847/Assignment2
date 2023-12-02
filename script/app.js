@@ -70,16 +70,20 @@ document.addEventListener("DOMContentLoaded", () => {
     return productCard;
   };
 
-  // Redirect to the product page
-  const openProductPage = (product) => {
-    const productPageURL = buildProductPageURL(product);
-    window.location.href = productPageURL;
-  };
 
-  // Build URL for the product page
-  const buildProductPageURL = (product) => {
-    return `product.html?id=${product.id}&title=${encodeURIComponent(product.title)}&price=${product.price}&discount=${product.discountPercentage}&category=${encodeURIComponent(product.category)}&stock=${product.stock}&thumbnail=${encodeURIComponent(product.thumbnail)}`;
-  };
+// In openProductPage function
+const openProductPage = (product) => {
+  const productPageURL = buildProductPageURL(product);
+  console.log('Product Page URL:', productPageURL);
+  window.location.href = productPageURL;
+};
+
+ // Build URL for the product page
+const buildProductPageURL = (product) => {
+  return `pages/product.html?id=${product.id}&title=${encodeURIComponent(product.title)}&price=${product.price}&discount=${product.discountPercentage}&category=${encodeURIComponent(product.category)}&stock=${product.stock}&thumbnail=${encodeURIComponent(product.thumbnail)}`;
+};
+
+  
 
   // Display pagination buttons
   const displayPagination = (products) => {
