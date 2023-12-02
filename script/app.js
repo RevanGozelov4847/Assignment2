@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // DOM elements
+  // DOM elementsi
   const elements = {
     productListContainer: document.getElementById("productList"),
     paginationContainer: document.getElementById("pagination"),
