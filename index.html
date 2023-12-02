@@ -6,6 +6,34 @@
     <title>Document</title>
 </head>
 <body>
-    
+    <body>
+        <div class="search-filter-sort">
+          <div class="search">
+            <label for="searchInput">Search: </label>
+            <input type="text" id="searchInput" oninput="searchProducts()" placeholder="Enter keyword" />
+          </div>
+        
+          <div class="filter">
+            <label for="categoryFilter">Filter by Category: </label>
+            <select id="categoryFilter" onchange="filterByCategory()">
+              <option value="all">All Categories</option>
+            </select>
+          </div>
+        
+          <div class="sort">
+            <label for="sortCriteria">Sort by: </label>
+            <select id="sortCriteria" onchange="sortProducts()">
+              <option value="default">Default</option>
+              <option value="price">Price</option>
+            </select>
+          </div>
+        </div>
+        
+      
+        <div id="productList"></div>
+        <div id="pagination"></div>
+      
+        <script src="../Assignment2/script/app.js"></script>
+      </body>
 </body>
 </html>
