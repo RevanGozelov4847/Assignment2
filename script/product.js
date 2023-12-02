@@ -11,16 +11,13 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     function displayProductDetails(product) {
-        const productDetailsContainer = document.getElementById('productDetails');
-
-        productDetailsContainer.innerHTML = `
-            <img src="${product.thumbnail}" alt="${product.title}" />
+        document.getElementById('productDetails').innerHTML = `<img src="${product.thumbnail}" alt="${product.title}" />
             <h2>${product.title}</h2>
             <p>Price: $${product.price}</p>
             <p>Discount: ${product.discount}%</p>
             <p>Category: ${product.category}</p>
-            <p>Stock: ${product.stock}</p>
-        `;
+            <p>Stock: ${product.stock}</p>`;
     }
+
     displayProductDetails(productDetails);
 });

@@ -1,91 +1,58 @@
 document.addEventListener("DOMContentLoaded", function () {
-  let allProducts = []; 
-  const productListContainer = document.getElementById("productList");
-  const paginationContainer = document.getElementById("pagination");
-  const searchInput = document.getElementById("searchInput");
-  const categoryFilter = document.getElementById("categoryFilter");
-  const sortCriteria = document.getElementById("sortCriteria");
-  const productsPerPage = 10;
-  let currentPage = 1;
+  const elements = {
+    productListContainer: document.getElementById("productList"),
+    paginationContainer: document.getElementById("pagination"),
+    searchInput: document.getElementById("searchInput"),
+    categoryFilter: document.getElementById("categoryFilter"),
+    sortCriteria: document.getElementById("sortCriteria"),
+  };
+
+  let allProducts = [], currentPage = 1, productsPerPage = 10;
 
   fetch("https://dummyjson.com/products")
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
+    .then(response => response.ok ? response.json() : Promise.reject("Network response was not ok"))
+    .then(data => {
       allProducts = data.products;
       populateCategoryFilter(allProducts);
       displayProductList(allProducts, currentPage);
       displayPagination(allProducts);
     })
-    .catch((error) => {
-      console.error("There was a problem with the fetch operation:", error);
-    });
+    .catch(error => console.error("Fetch operation problem:", error));
 
-  // Function to populate the category filter select box
   function populateCategoryFilter(products) {
-    const categories = [
-      ...new Set(products.map((product) => product.category)),
-    ];
-    const categoryOptions = categories.map(
-      (category) => `<option value="${category}">${category}</option>`
-    );
-    categoryFilter.innerHTML += categoryOptions.join("");
+    const categories = [...new Set(products.map(product => product.category))];
+    elements.categoryFilter.innerHTML += categories.map(category => `<option value="${category}">${category}</option>`).join("");
   }
 
-  // Function to display the product list on the web page
   function displayProductList(products, page) {
-    const startIdx = (page - 1) * productsPerPage;
-    const endIdx = startIdx + productsPerPage;
+    const startIdx = (page - 1) * productsPerPage, endIdx = startIdx + productsPerPage;
     const displayedProducts = products.slice(startIdx, endIdx);
-
-    productListContainer.innerHTML = "";
-
-    // Create HTML elements for each product
-    displayedProducts.forEach((product) => {
+    elements.productListContainer.innerHTML = "";
+    
+    displayedProducts.forEach(product => {
       const productCard = document.createElement("div");
       productCard.classList.add("product-card");
+      productCard.addEventListener("click", () => openProductPage(product));
 
-      // Attach a click event to each product card
-      productCard.addEventListener("click", () =>
-        openProductPage(product)
-      );
-
-      productCard.innerHTML = `
-                  <img src="${product.thumbnail}" alt="${product.title}" />
-                  <h3>${product.title}</h3>
-                  <p>Price: $${product.price}</p>
-                  <p>Discount: ${product.discountPercentage}%</p>
-                  <p>Category: ${product.category}</p>
-                  <p>Stock: ${product.stock}</p>
-              `;
-
-      productListContainer.appendChild(productCard);
+      productCard.innerHTML = `<img src="${product.thumbnail}" alt="${product.title}" />
+        <h3>${product.title}</h3>
+        <p>Price: $${product.price}</p>
+        <p>Discount: ${product.discountPercentage}%</p>
+        <p>Category: ${product.category}</p>
+        <p>Stock: ${product.stock}</p>`;
+      
+      elements.productListContainer.appendChild(productCard);
     });
   }
 
-  // Function to open a new HTML page for each product with detailed information
   function openProductPage(product) {
-    const productPageURL = `product.html?id=${
-      product.id
-    }&title=${encodeURIComponent(product.title)}&price=${
-      product.price
-    }&discount=${
-      product.discountPercentage
-    }&category=${encodeURIComponent(product.category)}&stock=${
-      product.stock
-    }&thumbnail=${encodeURIComponent(product.thumbnail)}`;
+    const productPageURL = `product.html?id=${product.id}&title=${encodeURIComponent(product.title)}&price=${product.price}&discount=${product.discountPercentage}&category=${encodeURIComponent(product.category)}&stock=${product.stock}&thumbnail=${encodeURIComponent(product.thumbnail)}`;
     window.location.href = productPageURL;
   }
 
-  // Function to display pagination
   function displayPagination(products) {
     const totalPages = Math.ceil(products.length / productsPerPage);
-
-    paginationContainer.innerHTML = "";
+    elements.paginationContainer.innerHTML = "";
 
     for (let i = 1; i <= totalPages; i++) {
       const pageButton = document.createElement("button");
@@ -94,75 +61,80 @@ document.addEventListener("DOMContentLoaded", function () {
         currentPage = i;
         displayProductList(products, currentPage);
       });
-      paginationContainer.appendChild(pageButton);
+      elements.paginationContainer.appendChild(pageButton);
     }
   }
 
-  // Function to search products based on the keyword and category
   window.searchProducts = function () {
-    const keyword = searchInput.value.toLowerCase();
-    const selectedCategory = categoryFilter.value;
-
-    // Filter products based on both keyword and category
-    const filteredProducts = allProducts.filter(
-      (product) =>
-        (selectedCategory === "all" ||
-          product.category === selectedCategory) &&
-        (product.title.toLowerCase().includes(keyword) ||
-          product.description.toLowerCase().includes(keyword) ||
-          product.category.toLowerCase().includes(keyword))
+    const keyword = elements.searchInput.value.toLowerCase();
+    const selectedCategory = elements.categoryFilter.value;
+  
+    const filteredProducts = allProducts.filter(product =>
+      (selectedCategory === "all" || product.category === selectedCategory) &&
+      (product.title.toLowerCase().includes(keyword))
     );
-
-    currentPage = 1; // Reset to the first page after searching
+  
+    currentPage = 1;
     displayProductList(filteredProducts, currentPage);
     displayPagination(filteredProducts);
   };
+  
+  
 
-  // Function to filter products based on the selected category
   window.filterByCategory = function () {
-    const selectedCategory = categoryFilter.value;
-    const keyword = searchInput.value.toLowerCase();
-
+    const selectedCategory = elements.categoryFilter.value;
+    const keyword = elements.searchInput.value.toLowerCase();
+    const selectedCriteria = elements.sortCriteria.value;
+  
+    let filteredProducts;
     if (selectedCategory === "all") {
-      // If 'All Categories' is selected, filter based on the search term only
-      const filteredProducts = allProducts.filter(
-        (product) =>
-          product.title.toLowerCase().includes(keyword) ||
-          product.description.toLowerCase().includes(keyword) ||
-          product.category.toLowerCase().includes(keyword)
+      filteredProducts = allProducts.filter(product =>
+        product.title.toLowerCase().includes(keyword) ||
+        product.description.toLowerCase().includes(keyword) ||
+        product.category.toLowerCase().includes(keyword)
       );
-
-      currentPage = 1; // Reset to the first page after filtering
-      displayProductList(filteredProducts, currentPage);
-      displayPagination(filteredProducts);
     } else {
-      // If a specific category is selected, filter based on both category and search term
-      const filteredProducts = allProducts.filter(
-        (product) =>
-          product.category === selectedCategory &&
-          (product.title.toLowerCase().includes(keyword) ||
-            product.description.toLowerCase().includes(keyword) ||
-            product.category.toLowerCase().includes(keyword))
+      filteredProducts = allProducts.filter(product =>
+        product.category === selectedCategory &&
+        (product.title.toLowerCase().includes(keyword) ||
+        product.description.toLowerCase().includes(keyword) ||
+        product.category.toLowerCase().includes(keyword))
       );
-
-      currentPage = 1; // Reset to the first page after filtering
-      displayProductList(filteredProducts, currentPage);
-      displayPagination(filteredProducts);
     }
-  };
-
-  // Function to sort products based on the selected criteria
-  window.sortProducts = function () {
-    const selectedCriteria = sortCriteria.value;
-    let sortedProducts = [...allProducts];
-
+  
+    let sortedProducts = [...filteredProducts];
+    
     if (selectedCriteria === "price") {
       sortedProducts.sort((a, b) => a.price - b.price);
     }
-    // Add more sorting criteria as needed
-
-    currentPage = 1; // Reset to the first page after sorting
+  
+    currentPage = 1;
     displayProductList(sortedProducts, currentPage);
     displayPagination(sortedProducts);
   };
+  
+
+  window.sortProducts = function () {
+    const selectedCriteria = elements.sortCriteria.value;
+    const keyword = elements.searchInput.value.toLowerCase();
+    const selectedCategory = elements.categoryFilter.value;
+  
+    let filteredProducts = allProducts.filter(product =>
+      (selectedCategory === "all" || product.category === selectedCategory) &&
+      (product.title.toLowerCase().includes(keyword) || 
+       product.description.toLowerCase().includes(keyword) || 
+       product.category.toLowerCase().includes(keyword))
+    );
+  
+    let sortedProducts = [...filteredProducts];
+  
+    if (selectedCriteria === "price") {
+      sortedProducts.sort((a, b) => a.price - b.price);
+    }
+  
+    currentPage = 1;
+    displayProductList(sortedProducts, currentPage);
+    displayPagination(sortedProducts);
+  };
+  
 });
