@@ -172,6 +172,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return sortedProducts;
   };
 
-  // Initial data fetch and setup
+  // Initial data fetch
   fetchData();
 });
