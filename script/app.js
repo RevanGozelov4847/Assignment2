@@ -74,8 +74,9 @@ document.addEventListener("DOMContentLoaded", () => {
 // In openProductPage function
 const openProductPage = (product) => {
   const productPageURL = buildProductPageURL(product);
-  console.log('Product Page URL:', productPageURL);
-  window.location.href = productPageURL;
+  console.log('Product Page URL:', productPageURL); 
+  // Pass the array of images to the product page
+  window.location.href = `${productPageURL}&images=${encodeURIComponent(JSON.stringify(product.images))}`;
 };
 
  // Build URL for the product page
