@@ -3,7 +3,9 @@ Readme:
 
 Product Listing and Details Web Application:
 This repository contains the source code for a simple web application that allows users to browse a list of products, search for specific products, filter them by category, and sort them based on different criteria. Additionally, users can click on a product to view detailed information on a separate page.
- 
+
+
+ 
 Table of Contents
 *Introduction
 *Features
@@ -13,12 +15,18 @@ Table of Contents
 *Dependencies
 *Contributing
 *License
- 
+
+
+ 
 Introduction:
 This web application is built using HTML, JavaScript, and SCSS. It fetches product data from a dummy API and dynamically updates the user interface based on user interactions such as search, filtering, and sorting. The application consists of two main pages - the product listing page (index.html) and the product details page (product.html).
- 
+
+
+ 
 Features:
- 
+
+
+ 
 Product Listing Page:
 Display a list of products with basic information.
 Allow users to search for products by keyword.
