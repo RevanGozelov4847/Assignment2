@@ -62,5 +62,8 @@ Contributions are welcome! Please check the contributing guidelines for more det
 
 License:
 This project is licensed under the MIT License. Feel free to use and modify the code for your own purposes.
-https://revangozelov4847.github.io/Assignment2/![image](https://github.com/RevanGozelov4847/Assignment2/assets/117466910/b5919edd-cc0e-408e-b1b4-894b0b3be24b) 
+
+https://revangozelov4847.github.io/Assignment2/
+
+
 
