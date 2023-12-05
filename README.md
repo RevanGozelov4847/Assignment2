@@ -24,6 +24,7 @@ Features:
 
 
 Product Listing Page:
+
 Display a list of products with basic information.
 Allow users to search for products by keyword.
 Provide a category filter to narrow down the product list.
@@ -31,6 +32,7 @@ Enable sorting of products by default or price.
 
 
 Product Details Page:
+
 Show detailed information about a selected product.
 Display product image, title, price, discount, category, and stock.
 
@@ -49,16 +51,19 @@ Usage:
 
 
 Product Listing Page (index.html):
+
 Use the search bar to filter products by keyword.
 Select a category from the dropdown to filter products accordingly.
 Choose a sorting criteria from the dropdown to arrange products.
 
 
 Product Details Page (product.html):
+
 View detailed information about a specific product.
 
 
 Folder Structure:
+
 dist/: Contains compiled CSS files.
 script/: Includes JavaScript files for the application logic.
 styles/: Contains SCSS files for styling.
@@ -67,15 +72,18 @@ README.md: Documentation for the project.
 
 
 Dependencies:
+
 No external libraries or frameworks are used.
 The application fetches product data from a dummy API.
 
 
 Contributing:
+
 Contributions are welcome! Please check the contributing guidelines for more details.
 
 
 License:
+
 This project is licensed under the MIT License. Feel free to use and modify the code for your own purposes.
 
 
