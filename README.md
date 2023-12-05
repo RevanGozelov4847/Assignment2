@@ -38,6 +38,7 @@ Display product image, title, price, discount, category, and stock.
 Getting Started
 Clone the repository:
 git clone https://github.com/RevanGozelov4847/Assignment2.git
+
 Open the index.html file in a web browser to view the index.html page.
 
 
